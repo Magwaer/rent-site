@@ -1,9 +1,9 @@
 var config = {
 	db: {
 		host: 'localhost',
-		user: 'admin_2rent',
-		password: 'Narkaman2',
-		database: 'admin_2rent',
+		user: '',
+		password: '',
+		database: '',
 		port: 3306,
 		insecureAuth: true
 	},
