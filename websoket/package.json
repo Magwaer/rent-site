@@ -1,0 +1,12 @@
+{
+	"name": "Predictive",
+	"description": "Predictive",
+	"vesion": "0.0.1",
+	"author": "BH",
+	"private": true,
+	"dependencies": {       
+		"socket.io": "0.9.16",
+		"underscore": ">= 1.4.x",
+		"mysql": "2.0.0-alpha7"     
+	}
+}
