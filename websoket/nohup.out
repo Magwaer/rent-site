@@ -1,0 +1,97 @@
+info: socket.io started
+mysql is alive! Phew!!
+poll running Wed Jul 29 2015 11:42:27 GMT-0400 (EDT)
+Data received from Db:
+
+[]
+debug: client authorized
+info: handshake authorized oYp-uTKGZPNYki3LeqXP
+debug: setting request GET /socket.io/1/websocket/oYp-uTKGZPNYki3LeqXP
+debug: set heartbeat interval for client oYp-uTKGZPNYki3LeqXP
+debug: client authorized for 
+debug: websocket writing 1::
+connect: oYp-uTKGZPNYki3LeqXP
+debug: sending data ack packet
+debug: websocket writing 6:::8+[true]
+poll running Wed Jul 29 2015 11:42:29 GMT-0400 (EDT)
+Data received from Db:
+
+[]
+poll running Wed Jul 29 2015 11:42:30 GMT-0400 (EDT)
+Data received from Db:
+
+[]
+poll running Wed Jul 29 2015 11:42:32 GMT-0400 (EDT)
+Data received from Db:
+
+[]
+poll running Wed Jul 29 2015 11:42:33 GMT-0400 (EDT)
+Data received from Db:
+
+[]
+poll running Wed Jul 29 2015 11:42:35 GMT-0400 (EDT)
+Data received from Db:
+
+[]
+poll running Wed Jul 29 2015 11:42:36 GMT-0400 (EDT)
+Data received from Db:
+
+[]
+poll running Wed Jul 29 2015 11:42:38 GMT-0400 (EDT)
+Data received from Db:
+
+[]
+poll running Wed Jul 29 2015 11:42:39 GMT-0400 (EDT)
+Data received from Db:
+
+[]
+poll running Wed Jul 29 2015 11:42:41 GMT-0400 (EDT)
+Data received from Db:
+
+[ { msg: 'mesajul nr 2', id: 2, socket_id: 'oYp-uTKGZPNYki3LeqXP' } ]
+oYp-uTKGZPNYki3LeqXP - [object Object]
+debug: websocket writing 5:::{"name":"in_msg","args":[{"msg":"mesajul nr 2","id":2}]}
+poll running Wed Jul 29 2015 11:42:42 GMT-0400 (EDT)
+Data received from Db:
+
+[]
+poll running Wed Jul 29 2015 11:42:44 GMT-0400 (EDT)
+Data received from Db:
+
+[]
+poll running Wed Jul 29 2015 11:42:45 GMT-0400 (EDT)
+Data received from Db:
+
+[]
+poll running Wed Jul 29 2015 11:42:47 GMT-0400 (EDT)
+Data received from Db:
+
+[]
+poll running Wed Jul 29 2015 11:42:48 GMT-0400 (EDT)
+Data received from Db:
+
+[]
+poll running Wed Jul 29 2015 11:42:50 GMT-0400 (EDT)
+Data received from Db:
+
+[]
+poll running Wed Jul 29 2015 11:42:52 GMT-0400 (EDT)
+Data received from Db:
+
+[ { msg: 'primul mesaj', id: 1, socket_id: 'oYp-uTKGZPNYki3LeqXP' } ]
+oYp-uTKGZPNYki3LeqXP - [object Object]
+debug: websocket writing 5:::{"name":"in_msg","args":[{"msg":"primul mesaj","id":1}]}
+debug: emitting heartbeat for client oYp-uTKGZPNYki3LeqXP
+debug: websocket writing 2::
+debug: set heartbeat timeout for client oYp-uTKGZPNYki3LeqXP
+debug: got heartbeat packet
+debug: cleared heartbeat timeout for client oYp-uTKGZPNYki3LeqXP
+debug: set heartbeat interval for client oYp-uTKGZPNYki3LeqXP
+poll running Wed Jul 29 2015 11:42:53 GMT-0400 (EDT)
+Data received from Db:
+
+[]
+poll running Wed Jul 29 2015 11:42:55 GMT-0400 (EDT)
+Data received from Db:
+
+[]

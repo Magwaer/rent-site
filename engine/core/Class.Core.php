@@ -1,13 +1,7 @@
 <?php
 /*
 * @ Version : 1
-* @ Force update : 0
 */
-
-//use PHPRouter\RouteCollection;
-//use PHPRouter\Router;
-//use PHPRouter\Route;
-//require_once("Class.Router.php");
 
 class pikolor_core {
 	protected $config = array();
@@ -24,59 +18,29 @@ class pikolor_core {
 		$this->request = new pikolor_request();
 		
 		$this->set_lang();
-		
 
 		$this->route = new pikolor_route();
 		$this->route->parse();
 		
 		$this->init_app();
 	}
-
 	
 	function init_app(){
 		$this->route->find_route();
 		
 		if ($this->route->action)
 		{
-
 			$app_class = $this->route->class_name;
-			$app_method = $this->route->method_name . "Action";
-			
+			$app_method = $this->route->method_name;
+			//echo $app_class;
 			if (class_exists($app_class))
 			{
-				/*
-				if (method_exists($app_class , $app_method))
-				{
-					$st = '$obj = new ' . $app_class . '();' . "\r\n";
-					$st.= '$obj->init(); ';
-					$st.= '$obj->' . $app_method . '( new pikolor_request()';
-					foreach($this->route->vars as $k=>$v)
-					{
-						$st.= ",  '" . $v . "'";
-					}
-					$st.= ');';
-					
-					eval($st);
-				}
-				else
-				{
-				
-					$st = '$obj = new ' . $app_class . '(new pikolor_request());' . "\r\n";
-					$st.= '$obj->init(); ';
-					
-					eval($st);
-				}
-				*/
-				
 				if (method_exists($app_class , $app_method))
 				{
 					$instance = new $app_class;
 					$instance->set_config($this->config);
 					$instance->init(); 
 					call_user_func_array(array($instance, $app_method), $this->route->vars);
-					
-					//$obj = new $app_class();
-					//$obj->$app_method( $this->route->vars );
 				}
 				else
 				{
@@ -89,7 +53,7 @@ class pikolor_core {
 	}
 	
 	function init_config($file) {
-		$this->config[$file] = Spyc::YAMLLoad( ROOT . DS . "engine" . DS . "config" . DS . $file . ".yml");
+		$this->config[$file] = Spyc::YAMLLoad( ROOT . DS . "app" . DS . "config" . DS . $file . ".yml");
 	}
 	
 	function set_errors()
@@ -136,7 +100,7 @@ class pikolor_core {
 				reset($lang_arr);
 				$_SESSION['lang'] = key($lang_arr);
 			}
-			   
+
 			$lang = $this->request->location(1);
 			if (!empty($lang) && in_array($lang , array_keys($lang_arr)))
 			{
@@ -152,10 +116,7 @@ class pikolor_core {
 			$_SESSION['lang'] = null;
 		}
 	}
-	
-	
 }
-
 
 function __autoload($file ) {
 	$error = false;
@@ -175,9 +136,9 @@ function __autoload($file ) {
 		require_once(ENGINE_PATH . 'db' . DS .  $file . '.php');
 	}
 	// Search in Controlers
-	elseif (file_exists(APP_PATH . 'controller' . DS .  $file . '.php'))
+	elseif (file_exists(APP_PATH . 'Controller' . DS .  $file . '.php'))
 	{
-		require_once(APP_PATH . 'controller' . DS .  $file . '.php');
+		require_once(APP_PATH . 'Controller' . DS .  $file . '.php');
 	}
 	// Search in Entities
 	elseif (file_exists(APP_PATH . 'Db' . DS .  $file . '.php'))
@@ -214,11 +175,9 @@ function __autoload($file ) {
 		echo "File " . $file . " not found";
 	//	die();
 	}
-		
 }
 
 /** Check for Magic Quotes and remove them **/
-
 function stripSlashesDeep($value) {
     $value = is_array($value) ? array_map('stripSlashesDeep', $value) : stripslashes($value);
     return $value;

@@ -2,6 +2,8 @@
 
 class APP_Controller {
 	private $is_init = false;
+	private $error = "";
+	public $db ;
 	public $config;
 	public $is_debugger = false;
 	public $template;
@@ -43,16 +45,7 @@ class APP_Controller {
 	
 	public function init_db()
 	{
-		if (!@$connect = mysql_connect( $this->config['db']['host'] , $this->config['db']['user'] , $this->config['db']['password'])) 
-			$this->error = "MYSQL : Could not connect to DB <br />" ;
-		elseif (!@mysql_select_db( $this->config['db']['name'], $connect )) 
-			$this->error .= "MYSQL : Could open DB ". $this->registry->config['DB_NAME'] . "<br />";
-		
-		
-		if (!$this->error)
-		{
-			mysql_query ("set names utf8") or die ("set names utf8 failed");
-		}
+		$this->db = new MysqliDb ($this->config['db']['host'],  $this->config['db']['user'], $this->config['db']['password'], $this->config['db']['name']);
 	}
 	
 	function set_config($config = array())

@@ -10,6 +10,12 @@ class pikolor_template extends APP_Controller{
 	public $template_path;
 	public $config = array();
 	public $route ;
+	private $twig;
+	
+	function __construct()
+	{
+		$this->twig = new Twig();
+	}
 	
 	function pikolor_template(){
 		$this->template_path = APP_PATH .  "Views" . DS;
@@ -36,22 +42,8 @@ class pikolor_template extends APP_Controller{
 	
 	function renderTemplate($template)
 	{
-		foreach($this->vars as $key => $val)
-		{
-			global $$key;
-			$$key = $val;
-		}
-		
-		$path = $this->template_path . $template . ".php";
-		if (file_exists($path))
-		{
-			require_once($path);
-		}
-		else
-		{
-			/** Error handling**/
-			echo "No such templates" . $path;
-		}
+		$page = $this->twig->render($template , $this->vars );
+		echo $page;
 	}
 	
 	function __destruct()

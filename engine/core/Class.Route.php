@@ -1,9 +1,7 @@
 <?php
 /*
 * @ Version : 1
-* @ Force update : 0
 */
-
 
 class pikolor_route {
 
@@ -20,7 +18,7 @@ class pikolor_route {
 	
 	function parse()
 	{
-		$arr = Spyc::YAMLLoad(ENGINE_PATH . 'config' . DS .  "route.yml" );
+		$arr = Spyc::YAMLLoad(APP_PATH . 'config' . DS .  "route.yml" );
 		$arr_engine = Spyc::YAMLLoad(ENGINE_PATH . 'config' . DS .  "engine_route.yml" );
 		$final_arr = array_merge($arr , $arr_engine);
 		$this->routes = $final_arr;
@@ -49,7 +47,6 @@ class pikolor_route {
 			
 			if ($routes->getUrl() != "/")
 			{
-				
 				// check if request _url matches route regex. if not, return false.
 				if (! preg_match("@^".$routes->getRegex()."*$@i", $requestUrl, $matches)) {
 					continue;
@@ -114,7 +111,10 @@ class pikolor_route {
 		{
 			$tmp = explode(":" , $action);
 			$this->class_name = $tmp[0];
-			$this->method_name = $tmp[1];
+			if (isset($tmp[1]))
+				$this->method_name = $tmp[1];
+			else
+				$this->method_name = "index";
 		}
 	}
 	

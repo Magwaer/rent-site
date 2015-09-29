@@ -10,7 +10,6 @@
  * @index
  */
 
-
 session_start();
 $_SESSION['time_start_script'] = microtime(true);
 

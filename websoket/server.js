@@ -21,6 +21,7 @@ var pollingLoop = function () {
 	
 	console.log("poll running " + now);
 	
+	
 	if(lock == 1) {
 		setTimeout(pollingLoop, POLLING_INTERVAL);
 		return false;	
@@ -28,33 +29,35 @@ var pollingLoop = function () {
 	
 	lock == 1;
                                     
-    var query = connection.query('SELECT * FROM vicidial_live_agents WHERE 1 AND status = "QUEUE"');
-    
-    query
-    .on('error', function(err) {                                                 
-        console.log( err ); 
-    })
-    .on('result', function( user ) {                                   
-        //parse result here        
-        
-        var socket = io.sockets.sockets[user.socket_id]; 
+    var query = connection.query('SELECT msg.msg, msg.id, users.socket_id FROM msg left join users on msg.user_id = users.id WHERE msg.read = 0 ',function(err,rows){
+		if(err) throw err;
+
+		console.log('Data received from Db:\n');
+		console.log(rows);
+		for (var i = 0; i < rows.length; i++) {
+			var row = rows[i]
+			var socket = io.sockets.sockets[row.socket_id]; 
                             
-        if(socket != null) {
-        	console.log(user.socket_id + " - " + io.sockets.sockets[user.socket_id]);
-       		io.sockets.sockets[user.socket_id].emit('incall', { lead_id: user.lead_id });				
-        }                                                                                	 
-    })
-    .on('end',function() {
-        lock = 0;                     
-        setTimeout(pollingLoop, POLLING_INTERVAL);        
-    });
+			if(socket != null) {
+				console.log(row.socket_id + " - " + io.sockets.sockets[row.socket_id]);
+				io.sockets.sockets[row.socket_id].emit('in_msg', { msg: row.msg , id: row.id });				
+			}   
+		};
+		
+		lock = 0;                     
+        setTimeout(pollingLoop, POLLING_INTERVAL);    
+	})
 
 };
 
 var setSocketId = function(user, socketId) {
-    var querySetSocket = connection.query('UPDATE vicidial_live_agents SET socket_id = "' + socketId + '" WHERE user = "' + user + '"');
+    var querySetSocket = connection.query('UPDATE users SET socket_id = "' + socketId + '" WHERE id = "' + user + '"');
 }
-  
+
+var readMsg = function(msg_id, socketId) {
+    var querReadMsg = connection.query('UPDATE msg SET `read` = "1" WHERE id = "' + msg_id + '"');
+}
+
 function handleDisconnect() {
 	connection = mysql.createConnection(db_config); 
 	                
@@ -89,17 +92,24 @@ io.sockets.on('connection', function (socket) {
 		socket.disconnect();  
 	});
 	
-	socket.on('set nickname', function(user, cb) {    
+	socket.on('set_id', function(user, cb) {    
 		
-		if(user.nickname == "") {    
+		if(user.id == "") {    
 		  return cb(false);	
 		}
 		
-		setSocketId(user.nickname, socket.id);     
+		setSocketId(user.id, socket.id);     
 		return cb(true);
 	});
 	
+	socket.on('read_msg', function(msg, cb) {    
+		
+		if(msg.id == "") {    
+		  return cb(false);	
+		}
+		
+		readMsg(msg.id, socket.id);     
+	});
+	
 });
-
-
 
